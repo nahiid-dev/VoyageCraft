@@ -1,0 +1,15 @@
+{
+    "name": "voyagecraft-api",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start": "wrangler dev",
+        "deploy": "wrangler deploy"
+    },
+    "dependencies": {
+        "firebase-admin": "^12.1.0"
+    },
+    "devDependencies": {
+        "wrangler": "^3.0.0"
+    }
+}
