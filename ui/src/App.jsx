@@ -1,3 +1,5 @@
+// ui/src/App.jsx
+
 import React, { useState, useEffect } from 'react';
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from './services/firebase';
@@ -34,9 +36,10 @@ function App() {
         setJobId(null);
 
         try {
-            // آدرس API ورکر شما اینجا قرار می‌گیرد
-            // در حالت توسعه، می‌توانید از پراکسی استفاده کنید تا فقط /api بنویسید
-            const response = await fetch('YOUR_WORKER_URL_HERE', {
+
+            const workerUrl = 'https://voyagecraft-api.naahid-sha.workers.dev/itinerary';
+
+            const response = await fetch(workerUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -96,9 +99,9 @@ function App() {
                         <h2>Your Itinerary Status: <span className={`status-${data.status}`}>{data.status}</span></h2>
                         {data.status === 'processing' && <p>We are crafting your personalized itinerary. Please wait...</p>}
                         {data.status === 'failed' && <p className="error-message">Error: {data.error}</p>}
-                        {data.status === 'completed' && data.itinerary && (
-                            <div className="itinerary">
-                                {data.itinerary.map((day) => (
+                        {data.status === 'completed' && data.itinerary && data.itinerary.itinerary && (
+                            <div className="itinerary-details">
+                                {data.itinerary.itinerary.map((day) => (
                                     <div key={day.day} className="day-card">
                                         <h3>Day {day.day}: {day.theme}</h3>
                                         <ul>
