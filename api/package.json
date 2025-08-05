@@ -7,9 +7,10 @@
         "deploy": "wrangler deploy"
     },
     "dependencies": {
-        "firebase-admin": "^12.1.0"
+        "firebase-admin": "^12.1.0",
+        "google-auth-library": "^10.2.1"
     },
     "devDependencies": {
-        "wrangler": "^3.0.0"
+        "wrangler": "^4.27.0"
     }
 }
