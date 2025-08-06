@@ -57,8 +57,7 @@ Below is the complete structure of files and folders, along with a description f
     └── package-lock.json # Exact version of dependencies
 </pre>
 
----
-
+```
 ## ☁️ Backend: `api/`
 
 This section is the brain and processing engine of the project, implemented as a **serverless service** on **Cloudflare Workers**.

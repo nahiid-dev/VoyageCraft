@@ -156,7 +156,8 @@ JSON
 }
 Final Result:
 After a few moments, a new document with the above jobId will be created in your Firestore itineraries collection, containing the complete, generated travel plan.
----
+
+```
 
 ##🌐 Live Links
 API Endpoint:
