@@ -4,6 +4,19 @@ VoyageCraft is a serverless API service that generates personalized travel itine
 
 This project was developed as part of an AI Engineering take-home test. The core challenge is managing asynchronous processes within a modern serverless architecture.
 
+---
+
+## 📚 Table of Contents
+
+- [Architecture & Technology Choices](#-architecture--technology-choices)
+- [Project Structure](#️-project-structure)
+- [Application Flow](#️-application-flow)
+- [Setup and Installation](#️-setup-and-installation)
+- [API Usage Example](#-api-usage-example)
+- [Live Links](#-live-links)
+
+---
+
 ## 🚀 Architecture & Technology Choices
 
 The selection of technologies and the project's structure were driven by the goals of speed, scalability, and a clean separation of concerns.
@@ -26,18 +39,21 @@ The selection of technologies and the project's structure were driven by the goa
 
 The project is designed to be modular, following the **Separation of Concerns** principle:
 
+<pre>
 api/
 ├── src/
-│   ├── index.js          # Main entrypoint and API router
+│   ├── index.js          # Main entry point and request router
 │   ├── routes/
-│   │   └── itinerary.js  # Handles the logic for itinerary requests
+│   │   └── itinerary.js  # Logic for handling itinerary creation
 │   ├── services/
-│   │   ├── firestore.js  # All code related to Firestore connection and operations
-│   │   └── ll.js        # All code related to calling the OpenAI API
+│   │   ├── firestore.js  # Firestore interaction logic
+│   │   └── llm.js        # OpenAI API call logic
 │   └── utils/
-│       └── uuid.js       # Utility functions, e.g., for generating IDs
-├── package.json          # Manages project dependencies
-└── wrangler.toml         # The main configuration file for the Cloudflare Worker
+│       └── uuid.js       # Utility functions (e.g., ID generation)
+├── package.json          # Project dependencies
+└── wrangler.toml         # Cloudflare Worker config
+</pre>
+
 
 
 * **`index.js`**: Acts as a traffic controller, routing incoming requests to the appropriate handlers.
@@ -140,3 +156,11 @@ JSON
 }
 Final Result:
 After a few moments, a new document with the above jobId will be created in your Firestore itineraries collection, containing the complete, generated travel plan.
+
+
+🌐 Live Links
+API Endpoint:
+https://voyagecraft-api.naahid-sha.workers.dev/
+
+Live UI Demo:
+https://voyagecraft-ui.pages.dev/
