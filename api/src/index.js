@@ -1,32 +1,39 @@
-// src/index.js
+// api/src/index.js - Final version with CORS support
 
 import { handleItinerary } from './routes/itinerary.js';
 
-/**
- * The main entry point for the Cloudflare Worker.
- * This function acts as a simple router, directing incoming requests
- * to the appropriate handler based on the request method and path.
- */
-export default {
-    /**
-     * Handles incoming fetch events.
-     * @param {Request} request The incoming request object.
-     * @param {object} env The environment variables bound to the Worker.
-     * @param {object} ctx The execution context of the request.
-     * @returns {Promise<Response>} A promise that resolves to the Response.
-     */
-    async fetch(request, env, ctx) {
-        const url = new URL(request.url);
+// Define CORS headers
+// These headers tell the browser that requests from other domains are allowed
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*', // Allows all domains. For more security, you can replace '*' with your UI site's address
+    'Access-Control-Allow-Methods': 'POST, OPTIONS', // Allowed methods
+    'Access-Control-Allow-Headers': 'Content-Type',
+};
 
-        // Route for creating a new itinerary.
-        // It accepts POST requests to the /itinerary path.
-        if (request.method === "POST" && url.pathname === "/itinerary") {
-            // Pass the request, environment, and execution context to the handler.
-            // The context (ctx) is crucial for using `waitUntil` for background tasks.
-            return await handleItinerary(request, env, ctx);
+export default {
+    async fetch(request, env, ctx) {
+        // Browsers send an OPTIONS request before sending the actual request
+        // to get permission from the server. We need to respond positively to this request.
+        if (request.method === 'OPTIONS') {
+            return new Response(null, { headers: corsHeaders });
         }
 
-        // For any other request, return a 404 Not Found response.
-        return new Response("Not Found", { status: 404 });
+        const url = new URL(request.url);
+        let response;
+
+        // Main routing of your application
+        if (request.method === "POST" && url.pathname === "/itinerary") {
+            response = await handleItinerary(request, env, ctx);
+        } else {
+            response = new Response("Not Found", { status: 404 });
+        }
+
+        // Create a copy of the response to modify its headers
+        response = new Response(response.body, response);
+
+        // Add CORS header to the final response
+        response.headers.set('Access-Control-Allow-Origin', '*');
+
+        return response;
     }
 };
